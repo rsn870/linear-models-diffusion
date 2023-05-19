@@ -43,6 +43,7 @@ def get_default_configs():
     # model
     config.model = model = ml_collections.ConfigDict()
     model.K = 100
+    model.forward = 'identity'
     model.sigma = 0.01
     model.dropout = 0.1
     model.model_channels = 128  # Base amount of channels in the model
