@@ -1,6 +1,8 @@
 # Linear Transformation Experiments
 
-Code base is a modified version of Heat Equation's code. Details are below the dividing line.
+Code base is a modified version of Heat Equation's code. Details are below the dividing line. Similar to heat equation we assume the below model for the forward process
+
+$$u_{t} = T(t)u_{t-1} + n$$ where $$n$$ is constant noise the values for which will remain the same as the heat equation values for now.
 
 
 
