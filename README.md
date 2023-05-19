@@ -6,6 +6,10 @@ $$u_{t} = T(t)u_{t-1} + n$$ where $n$ is constant noise the values for which wil
 
 All code for forward processes is present in model_code/utils.py. Code for identity transformation and two kinds of random matrix transformaions has already been added. Follow the template there to add any additional code.
 
+There is a Function_map dictionary present in model_code/utils.py. The options inside '' are the keys or the config/choice of forward process. For any new forward process create similar to existing template and give a name. In any config file located inside configs folder feel free to change the config.model.forward argument to desired key. If said argument is not present in any config file feel free to add in the config.model section. It has already been added for MNIST with value set to identity. Change as per your choice.
+
+Follow the instructions given for mnist below the dividng line.  
+
 
 
 ------------------------------------------ DIVIDING LINE ----------------------------------------------------------------------------
