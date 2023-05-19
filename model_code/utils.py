@@ -109,6 +109,15 @@ def create_forward_process_fixed_random_alt(config, device):
     return forward_process_module
 
 
+#Add any additional transformations to the function map below. This allows for cleaner code and beter bookkeeping
+
+Function_map = {
+
+    'identity' : create_forward_process_identity,
+    'fixed_random' : create_forward_process_fixed_random,
+    'fixed_random_alt' : create_forward_process_fixed_random_alt,
+    'heat' : create_forward_process_from_sigmas,}
+
 #------------------------------ DO NOT MODIFY THE CODE BELOW THIS LINE UNLESS DISTRIBUTION OF NOISE CHANGES ---------------------------------------------
 
 """Utilities related to log-likelihood evaluation"""
