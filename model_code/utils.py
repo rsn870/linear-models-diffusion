@@ -31,6 +31,85 @@ def create_forward_process_from_sigmas(config, sigmas, device):
     forward_process_module = DCTBlur(sigmas, config.data.image_size, device)
     return forward_process_module
 
+"""
+To create a new forward process create an auxiliary function and then a final create_forward_process like function as above. The latter should take config and device 
+as inputs. Config has details such as size of image and device ensures that operations take place in one device whether cpu or gpu. 
+
+Sample details are below
+
+Keep same arguments for forward process as below.
+
+
+
+"""
+
+class IdentityMap(nn.Module):
+    def __init__(self,image_size,device):
+
+        """Identity map forward process"""
+        super(IdentityMap, self).__init__()
+        self.image_size = image_size
+        self.T = torch.eye(image_size).to(device)
+
+    def forward(self, x, fwd_steps):
+        return torch.matmul(x, self.T)
+    
+def create_forward_process_identity(config, device):
+    forward_process_module = IdentityMap(config.data.image_size, device)
+    return forward_process_module
+
+
+class FixedRandomMap(nn.Module):
+    def __init__(self,image_size,K,device):
+
+        """Fixed random map forward process
+        K : number of timesteps
+        image_size : size of image
+        device : cpu or gpu
+
+        Here for each time step we multiply with a fixed random matrix for all data points (otherwise T is non deterministic)
+
+        An alternative could be to loop through each time step and multiply with a random matrix for each timestep. That paramaterization is below
+        """
+        super(FixedRandomMap, self).__init__()
+        self.image_size = image_size
+        self.timesteps = K 
+        self.T = [torch.randn(image_size,image_size).to(device) for i in range(self.timesteps)]
+
+    def forward(self, x, fwd_steps):
+        return torch.matmul(self.T[fwd_steps],x)
+    
+def create_forward_process_fixed_random(config, device):
+    forward_process_module = FixedRandomMap(config.data.image_size, config.model.K, device)
+    return forward_process_module
+
+class FixedRandomMap_alt(nn.Module):
+    def __init__(self,image_size,K,device):
+
+        """Fixed random map forward process alternate
+        K : number of timesteps
+        image_size : size of image
+        device : cpu or gpu
+
+
+        """
+        super(FixedRandomMap_alt, self).__init__()
+        self.image_size = image_size
+        self.timesteps = K 
+        self.T = [torch.randn(image_size,image_size).to(device) for i in range(self.timesteps)]
+
+    def forward(self, x, fwd_steps):
+
+        for i in range(fwd_steps):
+            x = torch.matmul(self.T[i],x)
+        return x
+    
+def create_forward_process_fixed_random_alt(config, device):
+    forward_process_module = FixedRandomMap_alt(config.data.image_size, config.model.K, device)
+    return forward_process_module
+
+
+#------------------------------ DO NOT MODIFY THE CODE BELOW THIS LINE UNLESS DISTRIBUTION OF NOISE CHANGES ---------------------------------------------
 
 """Utilities related to log-likelihood evaluation"""
 
