@@ -4,7 +4,7 @@ Code base is a modified version of Heat Equation's code. Details are below the d
 
 
 
------------------------------------------- DIVIDING LINE ----------------------------------------------------------------------------------------------------------
+------------------------------------------ DIVIDING LINE ----------------------------------------------------------------------------
 
 ## Generative Modelling With Inverse Heat Dissipation
  
