@@ -1,4 +1,12 @@
-# Generative Modelling With Inverse Heat Dissipation
+#Linear Transformation Experiments
+
+Code base is a modified version of Heat Equation's code. Details are below the dividing line.
+
+
+
+------------------------------------------ DIVIDING LINE ----------------------------------------------------------------------------------------------------------
+
+## Generative Modelling With Inverse Heat Dissipation
  
 This repository is the official implementation of the methods in the publication:
 
