@@ -4,6 +4,8 @@ Code base is a modified version of Heat Equation's code. Details are below the d
 
 $$u_{t} = T(t)u_{t-1} + n$$ where $n$ is constant noise the values for which will remain the same as the heat equation values for now.
 
+All code for forward processes is present in model_code/utils.py. Code for identity transformation and two kinds of random transformation has already been ended. Follow the template to add any additional code.
+
 
 
 ------------------------------------------ DIVIDING LINE ----------------------------------------------------------------------------
