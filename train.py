@@ -75,11 +75,12 @@ def train(config, workdir):
 
     # Build one-step training and evaluation functions
     optimize_fn = losses.optimization_manager(config)
+    scales = config.model.blur_schedule
+
 
     # Get the forward process definition
     if config.model.forward == 'heat':
         
-        scales = config.model.blur_schedule
         heat_forward_module = mutils.create_forward_process_from_sigmas(config, scales, config.device)
     
     else:
