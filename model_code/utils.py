@@ -116,7 +116,7 @@ Function_map = {
     'identity' : create_forward_process_identity,
     'fixed_random' : create_forward_process_fixed_random,
     'fixed_random_alt' : create_forward_process_fixed_random_alt,
-    'heat' : create_forward_process_from_sigmas,}
+    'heat' : create_forward_process_from_sigmas}
 
 #------------------------------ DO NOT MODIFY THE CODE BELOW THIS LINE UNLESS DISTRIBUTION OF NOISE CHANGES ---------------------------------------------
 
