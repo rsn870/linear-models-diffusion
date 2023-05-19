@@ -77,7 +77,8 @@ class FixedRandomMap(nn.Module):
         self.T = [torch.randn(image_size,image_size).to(device) for i in range(self.timesteps)]
 
     def forward(self, x, fwd_steps):
-        return torch.matmul(self.T[fwd_steps],x)
+        
+        return torch.cat([torch.matmul(self.T[int(fwd_steps[i]-1)],x[i]).unsqueeze(0).to(x.device) for i in range(len(fwd_steps))])
     
 def create_forward_process_fixed_random(config, device):
     forward_process_module = FixedRandomMap(config.data.image_size, config.model.K, device)
@@ -91,17 +92,21 @@ class FixedRandomMap_alt(nn.Module):
         image_size : size of image
         device : cpu or gpu
 
+        Retuns nan loss. Not yet resolved.
+
 
         """
         super(FixedRandomMap_alt, self).__init__()
         self.image_size = image_size
         self.timesteps = K 
-        self.T = [torch.randn(image_size,image_size).to(device) for i in range(self.timesteps)]
+        self.T = [(torch.randn(image_size,image_size).to(device) > 0).type(torch.uint8) for i in range(self.timesteps)]
 
     def forward(self, x, fwd_steps):
 
-        for i in range(fwd_steps):
-            x = torch.matmul(self.T[i],x)
+        for i in range(len(fwd_steps)):
+            for j in range(int(fwd_steps[i])):
+
+                x[i] = torch.matmul(self.T[j].float(),x[i])
         return x
     
 def create_forward_process_fixed_random_alt(config, device):
