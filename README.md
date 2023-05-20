@@ -21,7 +21,7 @@ Follow the instructions given for mnist below the dividng line.
 1. In general deterministic linear transformations that depend only on time do seem to be invertible as our hypothesis suggests 
 2. Complexity of learning as of now seems to depend on complexity of $T(t)$ as we observed with the edge cases.
 3. An interesting experiment to check later would be to extend to the stochastic case where $T(t)$ remains independent of $u$ but instead follows a distribution. This could work as a dry run for the non-linear case.
-4. We look set for the next step of constructing $T(t)$ such that the distribution $\lim_{t \to \infty}T(t)\{u\}$ holds interesting properties 
+4. We look set for the next step of constructing $T(t)$ such that the distribution $\{\lim_{t \to \infty}T(t)u\}$ holds interesting properties 
 
 
 ------------------------------------------ DIVIDING LINE -----------------------------------
