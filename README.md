@@ -2,7 +2,7 @@
 
 Code base is a modified version of Heat Equation's code. Details are below the dividing line. Similar to heat equation we assume the below model for the forward process
 
-$$u_{t} = T(t)u_{t-1} + n$$ where $n$ is noise from a constant distribution the values for which will remain the same as the heat equation values for now.
+$$u_{t} = T(t)u_{t-1} + n$$ where $T(t)$ is a deterministic linear transformation that depends only on $t$ and $n$ is noise from a constant distribution the values for which will remain the same as the heat equation values for now.
 
 All code for forward processes is present in model_code/utils.py. Code for identity transformation and two kinds of random matrix transformaions has already been added. Follow the template there to add any additional code.
 
