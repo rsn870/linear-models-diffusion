@@ -16,8 +16,9 @@ Follow the instructions given for mnist below the dividng line.
 - [x] Fixed random map i.e T(t) = unique random matrix $\forall t \in [0,T]$ code works. But converegence is painfully slow.
 - [ ] Alternate fixed random map paramaterization i.e $T(t) = \Pi_{i}R_{i}$ for random matrices $R_{i}$ fails due to numerical instability. 
 - [x] Added constant velocity map. Convergence looks good
-- [x] Added constant decelation map. Converegnce looks good
-- [x] Added constant velocity based darkening map. 
+- [x] Added constant deceleration map. Converegnce looks good
+- [x] Added constant velocity based darkening map. Convergence looks good
+- [x] Added constant deceleration map with reversal. Testing values of $a$ to check where model can reconstruct. 
 
 ## Some simple conclusions so far 
 
