@@ -29,7 +29,10 @@ Follow the instructions given for mnist below the dividng line.
 
 ### Mechanics 
 
-1. **Constant Velocity** 
+1. **Constant Velocity**  Set $$T(t) = (1-\frac{t}{K})I$$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will reach the origin at time $K$ with a constant velocity of $\frac{-u_{0}}{K}$ throughout. 
+2. **Constant Decelartion** Set $$T(t) = (\frac{t^{2}}{K^{2}}-\frac{t}{K})I$$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will come to a stop at the origin at time $K$ with an initial velocity of $\frac{-u_{0}}{K}$ and a constant accelaration of $\frac{2u_{0}}{K^{2}}$ throughout.
+
+In the above interpretations for interpretability in terms of images and numerical stability we consider the particle reaching the origin.
 
 ## Results
 
