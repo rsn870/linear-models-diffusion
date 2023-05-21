@@ -14,14 +14,26 @@ Follow the instructions given for mnist below the dividng line.
 
 - [x] Identity map code works. Results are obtained very fast.
 - [x] Fixed random map i.e T(t) = unique random matrix $\forall t \in [0,T]$ code works. But converegence is painfully slow.
-- [ ] Alternate fixed random map paramaterization i.e $T(t) = \Pi_{i}R_{i}$ for random matrices $R_{i}$ fails due to numerical instability.  
+- [ ] Alternate fixed random map paramaterization i.e $T(t) = \Pi_{i}R_{i}$ for random matrices $R_{i}$ fails due to numerical instability. 
+- [x] Added constant velocity map. Convergence looks good
+- [x] Added constant decelation map. Converegnce looks good
 
 ## Some simple conclusions so far 
 
 1. In general deterministic linear transformations that depend only on time do seem to be invertible as our hypothesis suggests 
 2. Complexity of learning as of now seems to depend on complexity of $T(t)$ as we observed with the edge cases.
 3. An interesting experiment to check later would be to extend to the stochastic case where $T(t)$ remains independent of $u$ but instead follows a distribution. This could work as a dry run for the non-linear case.
-4. We look set for the next step of constructing $T(t)$ such that the distribution $\{\lim_{t \to \infty}T(t)u_{0}\}$ holds interesting properties 
+4. We look set for the next step of constructing $T(t)$ such that the distribution $\{\lim_{t \to \infty}T(t)u_{0}\}$ holds interesting properties
+
+## Physics inspired constructions 
+
+### Mechanics 
+
+1. **Constant Velocity** 
+
+## Results
+
+
 
 
 ------------------------------------------ DIVIDING LINE -----------------------------------
