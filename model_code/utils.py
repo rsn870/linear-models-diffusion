@@ -213,7 +213,7 @@ Function_map = {
     'ramp': create_forward_process_ramp,
     'decelerating_ramp': create_forward_process_decelerating_ramp,
     'decelerating_ramp_reversal': create_forward_process_decelerating_ramp_reversal,
-    'darkening': create_forward_process_darkening,}
+    'darkening': create_forward_process_darkening}
 
 
 
