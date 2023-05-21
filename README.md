@@ -49,6 +49,11 @@ In the above interpretations for interpretability in terms of images and numeric
 ![dec_rev_samp](https://github.com/rsn870/linear-models-diffusion/blob/main/images/reversal.jpg?raw=true)
 
 
+### Sampled image for constant velocity darkening
+![dark](https://github.com/rsn870/linear-models-diffusion/blob/main/images/darkening.png?raw=true)
+
+
+
 
 
 ------------------------------------------ DIVIDING LINE -----------------------------------
