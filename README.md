@@ -2,7 +2,7 @@
 
 Code base is a modified version of Heat Equation's code. Details are below the dividing line. Similar to heat equation we assume the below model for the forward process
 
-$$u_{t} = T(t)u_{0} + n$$ where $T(t)$ is a deterministic linear transformation that depends only on $t$ and $n$ is noise from a constant distribution the values for which will remain the same as the heat equation values for now.
+$$u_{t} = T(t)u_{0} + V(t) n$$ where $T(t)$ is a deterministic linear transformation that depends only on $t$, $V$ is some function of t and $n$ is noise from a constant distribution the values for which will remain the same as the heat equation values for now.
 
 All code for forward processes is present in model_code/utils.py. Code for identity transformation and two kinds of random matrix transformaions has already been added. Follow the template there to add any additional code.
 
@@ -29,9 +29,9 @@ Follow the instructions given for mnist below the dividng line.
 
 ### Mechanics 
 
-1. **Constant Velocity**  We have $$T(t) = (1-\frac{t}{K})I$$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will reach the origin at time $K$ with a constant velocity of $\frac{-u_{0}}{K}$ throughout. 
-2. **Constant Decelartion** We have $$T(t) = (\frac{t^{2}}{K^{2}}-\frac{t}{K})I$$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will come to the origin at time $K$ with an initial velocity of $\frac{-u_{0}}{K}$ and a constant accelaration of $\frac{2u_{0}}{K^{2}}$ throughout.
-3. **Constant Deceleration with reversal** We have $$(\frac{2t^{2}}{K^{2}}-\frac{t}{K})I$$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will come to the origin at time $\frac{K}{2}$ and return to the initial point at time $K$ with an initial velocity of $\frac{-u_{0}}{K}$ and a constant accelaration of $\frac{4u_{0}}{K^{2}}$ throughout. This mapping is **not** invertible and is designed as a test to check if invertibility is essential.
+1. **Constant Velocity**  We have $$u_{t} = u_{0} -\frac{0.001t}{K} + n$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will reach $u_{0}-0.001$ at time $K$ with a constant velocity of $\frac{-0.001}{K}$ throughout. 
+2. **Constant Decelartion** We have $$$u_{t} = u_{0} -\frac{0.001t}{K} +\frac{0.001t^{2}}{2K^{2}} + n$$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will come to rest at $u_{0}-0.001$ at time $K$ with an initial velocity of $\frac{-0.001}{K}$ and a constant accelaration of $\frac{0.001}{K^{2}}$ throughout.
+3. **Constant Deceleration with reversal** We have $$u_{t} = u_{0} -\frac{0.001t}{K} +\frac{0.001t^{2}}{K^{2}} + n$$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will come to  $u_{0}-0.001$  at time $\frac{K}{2}$ and return to the initial point at time $K$ with an initial velocity of $\frac{-0.001}{K}$ and a constant accelaration of $\frac{0.002}{K^{2}}$ throughout. This mapping is **not** invertible and is designed as a test to check if invertibility is essential.
 
 In the above interpretations for interpretability in terms of images and numerical stability we consider the particle reaching the origin.
 
