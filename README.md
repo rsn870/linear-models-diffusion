@@ -52,8 +52,16 @@ In the above interpretations for interpretability in terms of images and numeric
 ### Sampled image for constant velocity darkening
 ![dark](https://github.com/rsn870/linear-models-diffusion/blob/main/images/darkening.png?raw=true)
 
+## PFGM and alternate formualtions for velocity
 
+PFGM :
 
+* Yilun Xu, Ziming Liu, Max Tegmark, Tommi S. Jaakkola (2022). **Poisson Flow Generative Models**. In *Neurips*. [[arXiv]](https://arxiv.org/pdf/2209.11178.pdf)
+This proposes an alternative paramterization :
+
+$$ \frac{du}{dt} = \vec{E} $$
+
+where $\vec{E}$ represents a field in their case the Electric Field where the particles are assumed to have uniform charge of the same kind. Here the model estimates $\vec{E}$ instead.
 
 
 ------------------------------------------ DIVIDING LINE -----------------------------------
@@ -62,7 +70,9 @@ In the above interpretations for interpretability in terms of images and numeric
  
 This repository is the official implementation of the methods in the publication:
 
+
 * Severi Rissanen, Markus Heinonen, and Arno Solin (2023). **Generative Modelling With Inverse Heat Dissipation**. In *International Conference on Learning Representations (ICLR)*. [[arXiv]](https://arxiv.org/abs/2206.13397) [[project page]](https://aaltoml.github.io/generative-inverse-heat-dissipation)
+
 
 ## Arrangement of code
 
