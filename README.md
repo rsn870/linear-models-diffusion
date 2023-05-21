@@ -61,7 +61,9 @@ This proposes an alternative paramterization :
 
 $$ \frac{du}{dt} = \vec{E} $$
 
-where $\vec{E}$ represents a field in their case the Electric Field where the particles are assumed to have uniform charge of the same kind. Here the model estimates $\vec{E}$ instead.
+where $\vec{E}$ represents a field in their case the Electric Field where the particles are assumed to have uniform charge of the same kind. Here the model estimates $\vec{E}$ instead. Empirically we have the following formulation during training :
+
+$$\frac{du}{dt} = \frac{u}{\|u\|} $$
 
 
 ------------------------------------------ DIVIDING LINE -----------------------------------
