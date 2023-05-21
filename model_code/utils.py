@@ -5,6 +5,8 @@ import logging
 import numpy as np
 from model_code.unet import UNetModel
 from model_code import torch_dct
+import math
+from torchvision.transforms import functional as F
 
 
 class DCTBlur(nn.Module):
@@ -119,16 +121,86 @@ class Ramp_Map(nn.Module):
         super(Ramp_Map, self).__init__()
         self.image_size = image_size
         self.timesteps = K
-        c = 1/K  #Add adjustment to ensure range does not explode
-        self.T = [(K-i) * c* torch.eye(image_size).to(device) for i in range(self.timesteps)]
+        #Add adjustment to ensure image does not explode or vanish
+        c = 0.001/K
+        self.T = [-i * c*torch.eye(image_size).to(device) for i in range(self.timesteps)]
 
     def forward(self, x, fwd_steps):
-        return torch.cat([torch.matmul(self.T[int(fwd_steps[i]-1)],x[i]).unsqueeze(0).to(x.device) for i in range(len(fwd_steps))])
+        for i in range(len(fwd_steps)):
+
+            x[i] = x[i] -self.T[int(fwd_steps[i]-1)]*torch.eye(self.image_size).to(x.device)
+        return x
+        #return torch.cat([torch.matmul(self.T[int(fwd_steps[i]-1)],x[i]).unsqueeze(0).to(x.device) for i in range(len(fwd_steps))])
     
 def create_forward_process_ramp(config, device):
     forward_process_module = Ramp_Map(config.data.image_size, config.model.K, device)
     return forward_process_module
 
+
+class Decelerating_Ramp_Map(nn.Module):
+    def __init__(self,image_size,K,device):
+        super(Decelerating_Ramp_Map, self).__init__()
+        self.image_size = image_size
+        self.timesteps = K
+        c = 0.001/K
+        #Kinematics equation for deceleration
+        
+        self.T = [(-i * c + c*math.pow(i,2)/(2*K*K))*torch.eye(image_size).to(device) for i in range(self.timesteps)]
+    def forward(self, x, fwd_steps):
+        for i in range(len(fwd_steps)):
+
+            x[i] = x[i] -self.T[int(fwd_steps[i]-1)]*torch.eye(self.image_size).to(x.device)
+        
+        return x
+        
+    
+def create_forward_process_decelerating_ramp(config, device):
+    forward_process_module = Decelerating_Ramp_Map(config.data.image_size, config.model.K, device)
+    return forward_process_module
+
+
+class Decelerating_Ramp_Map_Reversal(nn.Module):
+    def __init__(self,image_size,K,device):
+        super(Decelerating_Ramp_Map_Reversal, self).__init__()
+        self.image_size = image_size
+        self.timesteps = K
+        #Kinematics equation for deceleration with reversal
+        c = 0.001/K
+
+        
+        self.T = [(-i * c + c*math.pow(i,2)/(K*K))*torch.eye(image_size).to(device) for i in range(self.timesteps)]
+    def forward(self, x, fwd_steps):
+        for i in range(len(fwd_steps)):
+
+            x[i] = x[i] -self.T[int(fwd_steps[i]-1)]*torch.eye(self.image_size).to(x.device)
+        
+        return x
+    
+def create_forward_process_decelerating_ramp_reversal(config, device):
+    forward_process_module = Decelerating_Ramp_Map_Reversal(config.data.image_size, config.model.K, device)
+    return forward_process_module
+
+
+class Darkening_Map(nn.Module):
+    def __init__(self,image_size,K,device):
+        super(Darkening_Map, self).__init__()
+        self.image_size = image_size
+        self.timesteps = K
+
+        c = -0.7/K
+
+        self.T = [c*i+1 for i in range(self.timesteps)]
+
+    def forward(self, x, fwd_steps):
+        for i in range(len(fwd_steps)):
+
+            x[i] = F.adjust_brightness(x[i] ,self.T[int(fwd_steps[i]-1)])
+        
+        return x
+    
+def create_forward_process_darkening(config, device):
+    forward_process_module = Darkening_Map(config.data.image_size, config.model.K, device)
+    return forward_process_module
 
 #Add any additional transformations to the function map below. This allows for cleaner code and beter bookkeeping
 
@@ -138,7 +210,10 @@ Function_map = {
     'fixed_random' : create_forward_process_fixed_random,
     'fixed_random_alt' : create_forward_process_fixed_random_alt,
     'heat' : create_forward_process_from_sigmas,
-    'ramp': create_forward_process_ramp}
+    'ramp': create_forward_process_ramp,
+    'decelerating_ramp': create_forward_process_decelerating_ramp,
+    'decelerating_ramp_reversal': create_forward_process_decelerating_ramp_reversal,
+    'darkening': create_forward_process_darkening,}
 
 
 
