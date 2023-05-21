@@ -114,6 +114,21 @@ def create_forward_process_fixed_random_alt(config, device):
     return forward_process_module
 
 
+class Ramp_Map(nn.Module):
+    def __init__(self,image_size,K,device):
+        super(Ramp_Map, self).__init__()
+        self.image_size = image_size
+        self.timesteps = K
+        self.T = [i * torch.eye(image_size).to(device) for i in range(self.timesteps)]
+
+    def forward(self, x, fwd_steps):
+        return torch.cat([torch.matmul(self.T[int(fwd_steps[i]-1)],x[i]).unsqueeze(0).to(x.device) for i in range(len(fwd_steps))])
+    
+def create_forward_process_ramp(config, device):
+    forward_process_module = Ramp_Map(config.data.image_size, config.model.K, device)
+    return forward_process_module
+
+
 #Add any additional transformations to the function map below. This allows for cleaner code and beter bookkeeping
 
 Function_map = {
@@ -121,7 +136,10 @@ Function_map = {
     'identity' : create_forward_process_identity,
     'fixed_random' : create_forward_process_fixed_random,
     'fixed_random_alt' : create_forward_process_fixed_random_alt,
-    'heat' : create_forward_process_from_sigmas}
+    'heat' : create_forward_process_from_sigmas,
+    'ramp': create_forward_process_ramp}
+
+
 
 #------------------------------ DO NOT MODIFY THE CODE BELOW THIS LINE UNLESS DISTRIBUTION OF NOISE CHANGES ---------------------------------------------
 
