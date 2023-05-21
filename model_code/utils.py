@@ -119,7 +119,8 @@ class Ramp_Map(nn.Module):
         super(Ramp_Map, self).__init__()
         self.image_size = image_size
         self.timesteps = K
-        self.T = [i * torch.eye(image_size).to(device) for i in range(self.timesteps)]
+        c = 1/K  #Add adjustment to ensure range does not explode
+        self.T = [(K-i) * c* torch.eye(image_size).to(device) for i in range(self.timesteps)]
 
     def forward(self, x, fwd_steps):
         return torch.cat([torch.matmul(self.T[int(fwd_steps[i]-1)],x[i]).unsqueeze(0).to(x.device) for i in range(len(fwd_steps))])
