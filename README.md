@@ -36,7 +36,7 @@ Follow the instructions given for mnist below the dividng line.
 3. **Constant Deceleration with reversal** We have $$u_{t} = u_{0} -\frac{at}{K} +\frac{at^{2}}{K^{2}} + n$$ where $K$ is the time horizon. This represents a particle at position $u_{0}$ that will come to  $u_{0}-\frac{a}{2}$  at time $\frac{K}{2}$, reverse and then return to the initial point at time $K$ with an initial velocity of $\frac{-a}{K}$ and a constant accelaration of $\frac{2a}{K^{2}}$ throughout. This mapping is **not** invertible and is designed as a test to check if invertibility is essential.
 4. **Constant velocity as varying brightness** Consider the equation $$u_{t} = u_{0} -\frac{bt}{K}u_{0} + n$$ This represents a case where particle reaches $(1-b)u_{0}$ at time $K$ with a constant velocity $-\frac{b}{K}u_{0}$. Practically this is equivalent to darkening the image! 
 
-In the above interpretations for interpretability in terms of images and numerical stability we consider the particle reaching $u_{0}-0.001$. The displacement parameter can be varied in parctice.
+In the above interpretations for interpretability in terms of images and numerical stability we need to chose $a$ and $b$ carefully.. The displacement parameter can be varied in practice in only a certain range because of this.
 
 ## Results
 
