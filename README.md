@@ -2,7 +2,7 @@
 
 Code base is a modified version of Heat Equation's code. Details are below the dividing line. Similar to heat equation we assume the below model for the forward process
 
-$$u_{t} = T(t)u_{t-1} + n$$ where $T(t)$ is a deterministic linear transformation that depends only on $t$ and $n$ is noise from a constant distribution the values for which will remain the same as the heat equation values for now.
+$$u_{t} = T(t)u_{0} + n$$ where $T(t)$ is a deterministic linear transformation that depends only on $t$ and $n$ is noise from a constant distribution the values for which will remain the same as the heat equation values for now.
 
 All code for forward processes is present in model_code/utils.py. Code for identity transformation and two kinds of random matrix transformaions has already been added. Follow the template there to add any additional code.
 
@@ -21,7 +21,7 @@ Follow the instructions given for mnist below the dividng line.
 1. In general deterministic linear transformations that depend only on time do seem to be invertible as our hypothesis suggests 
 2. Complexity of learning as of now seems to depend on complexity of $T(t)$ as we observed with the edge cases.
 3. An interesting experiment to check later would be to extend to the stochastic case where $T(t)$ remains independent of $u$ but instead follows a distribution. This could work as a dry run for the non-linear case.
-4. We look set for the next step of constructing $T(t)$ such that the distribution $\{\lim_{t \to \infty}T(t)u_{t-1}\}$ holds interesting properties 
+4. We look set for the next step of constructing $T(t)$ such that the distribution $\{\lim_{t \to \infty}T(t)u_{0}\}$ holds interesting properties 
 
 
 ------------------------------------------ DIVIDING LINE -----------------------------------
