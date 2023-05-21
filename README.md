@@ -41,6 +41,12 @@ In the above interpretations for interpretability in terms of images and numeric
 
 ## Results
 
+Sampled image for identity transformation 
+![id sample](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+
+Sampled image for deceleration with reversal
+![dec_rev_samp](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+
 
 
 
