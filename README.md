@@ -29,9 +29,9 @@ Follow the instructions given for mnist below the dividng line.
 
 ### Mechanics 
 
-1. **Constant Velocity**  Set $$T(t) = (1-\frac{t}{K})I$$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will reach the origin at time $K$ with a constant velocity of $\frac{-u_{0}}{K}$ throughout. 
-2. **Constant Decelartion** Set $$T(t) = (\frac{t^{2}}{K^{2}}-\frac{t}{K})I$$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will come to the origin at time $K$ with an initial velocity of $\frac{-u_{0}}{K}$ and a constant accelaration of $\frac{2u_{0}}{K^{2}}$ throughout.
-3. **Constant Deceleration with reversal** Set $$(\frac{2t^{2}}{K^{2}}-\frac{t}{K})I$$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will come to the origin at time $\frac{K}{2}$ and return to the initial point at time $K$ with an initial velocity of $\frac{-u_{0}}{K}$ and a constant accelaration of $\frac{4u_{0}}{K^{2}}$ throughout. This mapping is **not** invertible and is designed as a test to check if invertibility is essential.
+1. **Constant Velocity**  We have $$T(t) = (1-\frac{t}{K})I$$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will reach the origin at time $K$ with a constant velocity of $\frac{-u_{0}}{K}$ throughout. 
+2. **Constant Decelartion** We have $$T(t) = (\frac{t^{2}}{K^{2}}-\frac{t}{K})I$$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will come to the origin at time $K$ with an initial velocity of $\frac{-u_{0}}{K}$ and a constant accelaration of $\frac{2u_{0}}{K^{2}}$ throughout.
+3. **Constant Deceleration with reversal** We have $$(\frac{2t^{2}}{K^{2}}-\frac{t}{K})I$$ where $I$ is the identity matrix and $K$ is the time horizon. This represents a particle at position $u_{0}$ that will come to the origin at time $\frac{K}{2}$ and return to the initial point at time $K$ with an initial velocity of $\frac{-u_{0}}{K}$ and a constant accelaration of $\frac{4u_{0}}{K^{2}}$ throughout. This mapping is **not** invertible and is designed as a test to check if invertibility is essential.
 
 In the above interpretations for interpretability in terms of images and numerical stability we consider the particle reaching the origin.
 
