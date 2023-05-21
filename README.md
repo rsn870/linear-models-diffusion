@@ -42,10 +42,10 @@ In the above interpretations for interpretability in terms of images and numeric
 ## Results
 
 Sampled image for identity transformation 
-![id sample](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![id sample](https://github.com/rsn870/linear-models-diffusion/blob/main/images/id.jpg?raw=true)
 
 Sampled image for deceleration with reversal
-![dec_rev_samp](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![dec_rev_samp](https://github.com/rsn870/linear-models-diffusion/blob/main/images/reversal.jpg?raw=true)
 
 
 
