@@ -19,7 +19,7 @@ Follow the instructions given for mnist below the dividng line.
 - [x] Added constant deceleration map. Converegnce looks good
 - [x] Added constant velocity based darkening map. Convergence looks good
 - [x] Added constant deceleration map with reversal. Testing values of $a$ to check where model can reconstruct. 
-- [] Added cooling map. Testing to see if sampling works. Sampling fails so far. Need to check why this happens.
+- [ ] Added cooling map. Testing to see if sampling works. Sampling fails so far. Need to check why this happens.
 
 ## Some simple conclusions so far 
 
