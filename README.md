@@ -20,7 +20,7 @@ Follow the instructions given for mnist below the dividng line.
 - [x] Added constant velocity based darkening map. Convergence looks good
 - [x] Added constant deceleration map with reversal. Testing values of $a$ to check where model can reconstruct. 
 - [ ] Added cooling map. Testing to see if sampling works. Sampling fails so far. Need to check why this happens.
-- [ ] Reimplementing cooling map. This time latent is set to darkened version of image. Test to check if model can learn cooling or latent is the main issue.
+- [x] Reimplementing cooling map. This time latent is set to darkened version of image. Test to check if model can learn cooling or latent is the main issue. Model has learnt therefore latent dynamics needs to be adjusted.
 
 ## Some simple conclusions so far 
 
