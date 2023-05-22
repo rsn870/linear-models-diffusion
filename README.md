@@ -19,6 +19,7 @@ Follow the instructions given for mnist below the dividng line.
 - [x] Added constant deceleration map. Converegnce looks good
 - [x] Added constant velocity based darkening map. Convergence looks good
 - [x] Added constant deceleration map with reversal. Testing values of $a$ to check where model can reconstruct. 
+- [x] Added cooling map. Testing to see if sampling works.
 
 ## Some simple conclusions so far 
 
@@ -38,6 +39,10 @@ Follow the instructions given for mnist below the dividng line.
 5. **Velocity as varying brightness with constant deceleration** Consider the equation $$u_{t} = u_{0} -\frac{bt}{K}u_{0} + \frac{bt^{2}}{2K^{2}}u_{0} + n$$ This represents a case where particle comes to rest at $\frac{(1-b)}{2}u_{0}$ at time $K$ with an initial velocity $-\frac{b}{K}u_{0}$ and constany acceleration $\frac{b}{K^{2}}u_{0}$.
 
 In the above interpretations for interpretability in terms of images and numerical stability we need to chose $a$ and $b$ carefully.The displacement parameter can be varied in practice in only a certain range because of this.
+
+### Thermodyanmics 
+
+1. **Newton's Law of Cooling** : We have that the temperature of a system has the following behavior : $$ T_{sys}(t) = T_{env} + (T_{sys}(0)-T_{env})e^{\frac{-t}{\tau}} $$ where $$ \tau $$ is a parameter. The key trick here lies in constructing $$ T_{env} $$ which is the limit at $\infty$. We use the following paramterization instead where $K$ is once again the time horizon. $$u_{t} = u_{latent} + (u_{0}-u_{latent})e^{\frac{-t}{K-t}} + n$$ which ensures that we are arbitrarily close to a $u_{latent}$ which belongs to a nice distribution $p(.)$. Given that in our paramaterization as of now, dimensions are invariant, we use the Diffusion Model Forward Process as a proxy instead with a fixed random seed for all images to obtain a nice latent space pliable to sampling. This possibly has a neat physical interpretation as well. 
 
 ## Results
 
