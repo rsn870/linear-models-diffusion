@@ -46,7 +46,7 @@ In the above interpretations for interpretability in terms of images and numeric
 1. **Newton's Law of Cooling** : We have that the temperature of a system has the following behavior : $$T_{sys}(t) = T_{env} + (T_{sys}(0)-T_{env})e^{\frac{-t}{\tau}}$$ where $\tau$ is a parameter. The key trick here lies in constructing $T_{env}$ which is the limit at $\infty$. We use the following paramterization instead where $K$ is once again the time horizon. $$u_{t} = u_{latent} + (u_{0}-u_{latent})e^{\frac{-t}{K-t}} + n$$ which ensures that we are arbitrarily close to a $u_{latent}$ at the horizon which belongs to a nice distribution $p(.)$. Given that in our paramaterization as of now, dimensions are invariant, we use the Diffusion Model Forward Process as a proxy instead with a fixed random seed for all images to obtain a nice latent space pliable to sampling. This possibly has a neat physical interpretation as well. 
 2. **Geometric Brownian Motion** : We set a forward Geometric Brownian Motion SDE with the following discretization : 
 
-$$u_{t} = u_{t-1}e^{r-0.5*\sigma^{2}}+\sigma^{2}\sqrt{Z_{t}}$$ where $Z \sim \mathcal{N}(\bf{0},\bf{I})$
+$$u_{t} = u_{t-1}e^{r-\frac{\sigma^{2}}{2}}+\sigma^{2}\sqrt{Z_{t}}$$ where $Z \sim \mathcal{N}(\bf{0},\bf{I})$
 
 ## Results
 
