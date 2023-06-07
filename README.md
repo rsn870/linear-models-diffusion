@@ -50,7 +50,7 @@ In the above interpretations for interpretability in terms of images and numeric
 $$u_{t} = u_{t-1}e^{r-\frac{\sigma^{2}}{2}}+\sigma n$$
 
 ### Oscillations 
-We have maps of the form $$u_{t} = (a cos(2f \Pi t/T) + b)u_{0} + n$$ in this case where $a+b=1$ as per the boundary condition and $f$ represents the frequency of oscillation. The model learns even in cases such as $f=10$.
+We have maps of the form $$u_{t} = (a cos(\frac{2f \pi t}{K}) + b)u_{0} + n$$ in this case where $a+b=1$ as per the boundary condition, $K$ is the time horizon and $f$ represents the frequency of oscillation. The model learns even in cases such as $f=10$.
 
 ## Results
 
