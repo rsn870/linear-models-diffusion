@@ -21,6 +21,7 @@ Follow the instructions given for mnist below the dividng line.
 - [x] Added constant deceleration map with reversal. Testing values of $a$ to check where model can reconstruct. 
 - [ ] Added cooling map. Testing to see if sampling works. Sampling fails so far. Need to check why this happens.
 - [x] Reimplementing cooling map. This time latent is set to darkened version of image. Test to check if model can learn cooling or latent is the main issue. Model has learnt therefore latent dynamics needs to be adjusted.
+- [x] Added code for oscillations with a stability paramter. Code works with fast convergence
 
 ## Some simple conclusions so far 
 
@@ -47,6 +48,9 @@ In the above interpretations for interpretability in terms of images and numeric
 2. **Geometric Brownian Motion** : We set a forward Geometric Brownian Motion SDE with the following discretization : 
 
 $$u_{t} = u_{t-1}e^{r-\frac{\sigma^{2}}{2}}+\sigma n$$
+
+### Oscillations 
+We have maps of the form $$u_{t} = (a cos(2f \Pi t/T) + b)u_{0} _ n$$ in this case where $a+b=1$ as per the boundary condition and $f$ represents the frequency of oscillation. The model learns even in cases such as $f=10$.
 
 ## Results
 
