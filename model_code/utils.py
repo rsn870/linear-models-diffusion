@@ -7,6 +7,7 @@ from model_code.unet import UNetModel
 from model_code import torch_dct
 import math
 from torchvision.transforms import functional as F
+from diffusers import DDIMScheduler
 
 
 class DCTBlur(nn.Module):
@@ -165,7 +166,7 @@ class Decelerating_Ramp_Map_Reversal(nn.Module):
         self.image_size = image_size
         self.timesteps = K
         #Kinematics equation for deceleration with reversal
-        c = 0.001/K
+        c = 0.01/K
 
         
         self.T = [(-i * c + c*math.pow(i,2)/(K*K))*torch.eye(image_size).to(device) for i in range(self.timesteps)]
@@ -202,6 +203,140 @@ def create_forward_process_darkening(config, device):
     forward_process_module = Darkening_Map(config.data.image_size, config.model.K, device)
     return forward_process_module
 
+class Cooling_Map(nn.Module):
+    def __init__(self,image_size,K,device):
+        super(Cooling_Map, self).__init__()
+        self.image_size = image_size
+        self.timesteps = K
+
+        self.rand_seed = torch.randn(image_size).to(device)
+
+        self.scheduler = DDIMScheduler.from_config("CompVis/ldm-celebahq-256", subfolder="scheduler")
+
+        self.T = [math.exp((-i/(K-i))+0.02)*torch.eye(image_size).to(device) for i in range(self.timesteps)] #Add temperature parameter
+
+        self.actual_time = K  #Add to config later on
+
+    def forward(self, x, fwd_steps):
+        finale = self.actual_time*torch.ones(len(fwd_steps)).long().to(x.device)
+        xf = self.scheduler.add_noise(x, self.rand_seed, finale)
+        
+        for i in range(len(fwd_steps)):
+
+            
+
+            
+
+            x[i] = xf[i] + (x[i]-xf[i])*self.T[int(fwd_steps[i]-1)]
+
+        return x
+    
+def create_forward_process_cooling(config, device):
+    forward_process_module = Cooling_Map(config.data.image_size, config.model.K, device)
+    return forward_process_module
+
+
+class Cooling_Map_Dark(nn.Module):
+    def __init__(self,image_size,K,device):
+        super(Cooling_Map_Dark, self).__init__()
+        self.image_size = image_size
+        self.timesteps = K
+
+        self.rand_seed = torch.randn(image_size).to(device)
+
+        self.scheduler = DDIMScheduler.from_config("CompVis/ldm-celebahq-256", subfolder="scheduler")
+
+        self.T = [math.exp((-i/(K-i))+0.02)*torch.eye(image_size).to(device) for i in range(self.timesteps)] #Add temperature parameter
+
+        self.actual_time = 500  #Add to config later on
+
+    def forward(self, x, fwd_steps):
+        #finale = self.actual_time*torch.ones(len(fwd_steps)).long().to(x.device)
+        #xf = self.scheduler.add_noise(x, self.rand_seed, finale)
+        xf = 0.6*x
+        for i in range(len(fwd_steps)):
+
+            
+
+            
+
+            x[i] = xf[i] + (x[i]-xf[i])*self.T[int(fwd_steps[i]-1)]
+
+        return x
+    
+def create_forward_process_cooling_dark(config, device):
+    forward_process_module = Cooling_Map_Dark(config.data.image_size, config.model.K, device)
+    return forward_process_module
+
+
+class Darkening_Map_Sink(nn.Module):
+    def __init__(self,image_size,K,device):
+        super(Darkening_Map_Sink, self).__init__()
+        self.image_size = image_size
+        self.timesteps = K
+
+        self.eta = 0.0
+
+        self.T = [(1-self.eta)*math.cos(math.pi*i/2*K)+self.eta for i in range(self.timesteps)]
+
+    def forward(self, x, fwd_steps):
+        for i in range(len(fwd_steps)):
+
+            x[i] = F.adjust_brightness(x[i] ,self.T[int(fwd_steps[i]-1)])
+        
+        return x
+    
+def create_forward_process_darkening_map_sink(config, device):
+    forward_process_module = Darkening_Map_Sink(config.data.image_size, config.model.K, device)
+    return forward_process_module
+
+class Darkening_Map_No_Sink(nn.Module):
+    def __init__(self,image_size,K,device):
+        super(Darkening_Map_No_Sink, self).__init__()
+        self.image_size = image_size
+        self.timesteps = K
+        self.eta = 0.7
+
+        self.T = [(1-self.eta)*math.cos(2*math.pi*i/K)+self.eta for i in range(self.timesteps)]
+    
+    def forward(self, x, fwd_steps):
+        for i in range(len(fwd_steps)):
+
+            x[i] = F.adjust_brightness(x[i] ,self.T[int(fwd_steps[i]-1)])
+        
+        return x
+
+def create_forward_process_darkening_map_no_sink(config, device):
+    forward_process_module = Darkening_Map_No_Sink(config.data.image_size, config.model.K, device)
+    return forward_process_module
+
+class Darkening_Map_No_Sink_Periodic(nn.Module):
+    def __init__(self,image_size,K,device):
+        super(Darkening_Map_No_Sink_Periodic, self).__init__()
+        self.image_size = image_size
+        self.timesteps = K
+        self.eta = 0.8
+
+        self.period = 10
+
+        self.T = [(1-self.eta)*math.cos(2*self.period*math.pi*i/K)+self.eta for i in range(self.timesteps)]
+    
+    def forward(self, x, fwd_steps):
+        for i in range(len(fwd_steps)):
+
+            x[i] = F.adjust_brightness(x[i] ,self.T[int(fwd_steps[i]-1)])
+        
+        return x
+    
+def create_forward_process_darkening_map_no_sink_periodic(config, device):
+    forward_process_module = Darkening_Map_No_Sink_Periodic(config.data.image_size, config.model.K, device)
+    return forward_process_module
+
+
+
+
+
+
 #Add any additional transformations to the function map below. This allows for cleaner code and beter bookkeeping
 
 Function_map = {
@@ -213,7 +348,12 @@ Function_map = {
     'ramp': create_forward_process_ramp,
     'decelerating_ramp': create_forward_process_decelerating_ramp,
     'decelerating_ramp_reversal': create_forward_process_decelerating_ramp_reversal,
-    'darkening': create_forward_process_darkening}
+    'darkening': create_forward_process_darkening,
+    'cooling': create_forward_process_cooling,
+    'cooling_dark': create_forward_process_cooling_dark,
+    'darkening_sink': create_forward_process_darkening_map_sink,
+    'darkening_no_sink': create_forward_process_darkening_map_no_sink,
+    'darkening_no_sink_periodic': create_forward_process_darkening_map_no_sink_periodic,}
 
 
 
